@@ -21,6 +21,8 @@ app.get("/", (req, res) =>{
 app.post("/get-msg", (req, res) => {
 
     const { From, Body } = req.body;
+    console.log(From + "\n")
+    console.log(Body)
     sendMsg("Got it" + Body, From)
    
 
