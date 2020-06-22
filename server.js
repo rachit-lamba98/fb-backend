@@ -19,6 +19,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '/templates/views'))
 app.set('view engine', 'ejs')
 
+var intentToEntity = {
+    'websiteModification' : 'websiteModifications:websiteModifications',
+    'Industry' : 'industryType:industryType',
+    'kindOfWebsite' : 'websiteType:websiteType',
+    'userResponse' : 'websiteModifications:websiteModifications'
+}
+
 app.get("/", (req, res) =>{
     console.log(path.join(__dirname, '/templates/views'))
     res.render('home', {data:"App is running on port" + port})
@@ -28,10 +35,12 @@ app.get("/", (req, res) =>{
 app.post("/get-msg", (req, res) => {
     const { From, Body } = req.body;
     uri = uri + encodeURIComponent(Body)
-    fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then(res => console.log(JSON.stringify(res)))
-    sendMsg("Great! So you want to build an ecommerce website. What kind of business do you have ? ", From )
-   
-
+    fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
+        var intent = res.intents[0].name
+        var entity = intentToEntity[intent]
+        var value = res.entities[entity][0].value
+        sendMsg("Great! So you want to build an" + value + "website. What kind of business do you have ? ", From)
+    })
 })
 
 function sendMsg(msg, number) {
