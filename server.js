@@ -24,7 +24,7 @@ app.post("/get-msg", (req, res) => {
     // console.log(From + "\n")
     // console.log(Body)
     console.log("RESPONSE BODY STARTS")
-    console.log(req.body)
+    console.log(res.body)
     console.log("RESPONSE BODY ENDS")
     sendMsg("Got it", "whatsapp:+917042971742" )
    
