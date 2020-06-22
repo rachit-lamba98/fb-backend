@@ -8,7 +8,7 @@ const accountSid = 'AC31b47c864d200ec38454dca109f2b67d';
 const authToken = '9253c5881b929c6f0e3e0d857a7e19bd';
 const client = require('twilio')(accountSid, authToken);
 
-const uri = 'https://api.wit.ai/message?q='
+var uri = 'https://api.wit.ai/message?q='
 CLIENT_TOKEN = 'GXSOHQRNFTVBGTORX5QXQJXJ3WXEARZS'
 const auth = 'Bearer ' + CLIENT_TOKEN
 
