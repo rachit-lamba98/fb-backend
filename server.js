@@ -62,9 +62,9 @@ app.post("/get-msg", (req, res) => {
     }
     else{
         currentQuery = nextQuery[users[From].lastQuery]
-        if(currentQuery == "end")
-            users = {};
         users[From].lastQuery = currentQuery
+        if(currentQuery == "end")
+            users = {}
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             // var intent = res.intents[0].name
