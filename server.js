@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const ejs = require('ejs');
+const bodyParser = require('body-parser')
 
 const accountSid = 'AC31b47c864d200ec38454dca109f2b67d';
 const authToken = '9253c5881b929c6f0e3e0d857a7e19bd';
@@ -9,7 +10,7 @@ const client = require('twilio')(accountSid, authToken);
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '/templates/views'))
 app.set('view engine', 'ejs')
 
