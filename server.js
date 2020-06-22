@@ -26,6 +26,24 @@ var intentToEntity = {
     'userResponse' : 'websiteModifications:websiteModifications'
 }
 
+var nextQuery = {
+    "start": "typeOfBusiness",
+    'typeOfBusiness' : 'businessName',
+    'businessName' : 'aboutBusiness',
+    'aboutBusiness' : 'end'
+}
+
+var response = {
+    "start" : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
+    "typeOfBusiness": "Great! What kind of business do you have ?",
+    "businessName": "What is the name of your business ?",
+    "aboutBusiness": "Awesome! Can you say more about what your business is about ?",
+    "end": "That's all I needed! Your website will be ready in a few minutes."
+}
+
+var users = {}
+
+
 app.get("/", (req, res) =>{
     console.log(path.join(__dirname, '/templates/views'))
     res.render('home', {data:"App is running on port" + port})
@@ -34,13 +52,25 @@ app.get("/", (req, res) =>{
 
 app.post("/get-msg", (req, res) => {
     const { From, Body } = req.body;
-    uri = uri + encodeURIComponent(Body)
-    fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-        var intent = res.intents[0].name
-        var entity = intentToEntity[intent]
-        var value = res.entities[entity][0].value
-        sendMsg("Great! So you want to build an" + value + "website. What kind of business do you have ? ", From)
-    })
+    var currentQuery = "";
+    if(!(From in users)){
+        users[From] = {
+            lastQuery: "start",
+            data: {}
+        }
+        sendMsg(response[users[From].lastQuery], From)
+    }
+    else{
+        currentQuery = nextQuery[users[From].lastQuery]
+        users[From].lastQuery = currentQuery
+        uri = uri + encodeURIComponent(Body)
+        fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
+            // var intent = res.intents[0].name
+            // var entity = intentToEntity[intent]
+            // var value = res.entities[entity][0].value
+            sendMsg(response[currentQuery], From)
+        })
+    }
 })
 
 function sendMsg(msg, number) {
@@ -50,12 +80,12 @@ function sendMsg(msg, number) {
             body: msg,
             to: number
         })
-        .then(message => console.log(message)).catch((err) => {
+        .catch((err) => {
             console.log(err);
         });
 }
 
-sendMsg("Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?", "whatsapp:+917042971742")
+// sendMsg("Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?", "whatsapp:+917042971742")
 
 app.listen(port, ()=>{
     console.log("Server is running on port " + port);
