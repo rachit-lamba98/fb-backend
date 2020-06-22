@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const ejs = require('ejs')
+const ejs = require('ejs');
 
 const accountSid = 'AC31b47c864d200ec38454dca109f2b67d';
 const authToken = '9253c5881b929c6f0e3e0d857a7e19bd';
@@ -9,6 +9,7 @@ const client = require('twilio')(accountSid, authToken);
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(express.json())
 app.set('views', path.join(__dirname, '/templates/views'))
 app.set('view engine', 'ejs')
 
@@ -24,7 +25,7 @@ app.post("/get-msg", (req, res) => {
     // console.log(From + "\n")
     // console.log(Body)
     console.log("RESPONSE BODY STARTS")
-    console.log(res.body)
+    console.log(req.body)
     console.log("RESPONSE BODY ENDS")
     sendMsg("Got it", "whatsapp:+917042971742" )
    
