@@ -21,6 +21,7 @@ app.get("/", (req, res) =>{
 app.post("/get-msg", (req, res) => {
 
     const { From, Body } = req.body;
+    sendMsg("Got it" + Body, From)
    
 
 })
@@ -36,6 +37,8 @@ function sendMsg(msg, number) {
             console.log(err);
         });
 }
+
+sendMsg("Helloooooo", "whatsapp:+917042971742")
 
 app.listen(port, ()=>{
     console.log("Server is running on port " + port);
