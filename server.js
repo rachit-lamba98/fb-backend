@@ -27,7 +27,7 @@ app.get("/", (req, res) =>{
 
 app.post("/get-msg", (req, res) => {
     const { From, Body } = req.body;
-    uri = uri + encodedURIComponent(Body)
+    uri = uri + encodeURIComponent(Body)
     fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then(res => console.log(JSON.stringify(res)))
     sendMsg("Great! So you want to build an ecommerce website. What kind of business do you have ? ", From )
    
