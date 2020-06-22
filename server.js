@@ -22,12 +22,7 @@ app.get("/", (req, res) =>{
 
 app.post("/get-msg", (req, res) => {
 
-    // const { From, Body } = req.body;
-    // console.log(From + "\n")
-    // console.log(Body)
-    console.log("RESPONSE BODY STARTS")
-    console.log(req.body)
-    console.log("RESPONSE BODY ENDS")
+    const { From, Body } = req.body;
     sendMsg("Got it", "whatsapp:+917042971742" )
    
 
@@ -45,7 +40,7 @@ function sendMsg(msg, number) {
         });
 }
 
-sendMsg("Helloooooo", "whatsapp:+917042971742")
+sendMsg("Henloooooo, this is website builder bot. I assume you want a website build for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?", "whatsapp:+917042971742")
 
 app.listen(port, ()=>{
     console.log("Server is running on port " + port);
