@@ -62,6 +62,8 @@ app.post("/get-msg", (req, res) => {
     }
     else{
         currentQuery = nextQuery[users[From].lastQuery]
+        if(currentQuery == "end")
+            users = {};
         users[From].lastQuery = currentQuery
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
@@ -85,7 +87,7 @@ function sendMsg(msg, number) {
         });
 }
 
-// sendMsg("Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?", "whatsapp:+917042971742")
+sendMsg("Available now!", "whatsapp:+917042971742")
 
 app.listen(port, ()=>{
     console.log("Server is running on port " + port);
