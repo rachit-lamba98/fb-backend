@@ -76,7 +76,7 @@ app.post("/get-msg", (req, res) => {
             var next_query = nextQuery[lastQuery]
             sendMsg(response[next_query], From)
             users[From].lastQuery = next_query
-            if(currentQuery == "end"){
+            if(next_query == "end"){
                 users[From].siteCreated = true
                 console.log(users)
                 users = {}
