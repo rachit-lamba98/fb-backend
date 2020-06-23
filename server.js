@@ -27,11 +27,11 @@ var intentToEntity = {
 }
 
 var nextQuery = {
-    "typeOfSite": "name",
+    "typeOfSite": "typeOfBusiness",
+    "typeOfBusiness" : "name",
     "name":"email",
     "email":"address",
-    "address":"typeOfBusiness",
-    "typeOfBusiness" : "businessName",
+    "address":"businessName",
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
 }
