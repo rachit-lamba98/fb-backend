@@ -80,9 +80,9 @@ app.post("/get-msg", (req, res) => {
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             var found = false; 
             for(var entity in res.entities){
-                if(entities[entity][0].name == response[lastQuery].entity){
+                if(res.entities[entity][0].name == response[lastQuery].entity){
                     found = true;
-                    users[From].data[lastQuery] = entities[entity][0].value
+                    users[From].data[lastQuery] = res.entities[entity][0].value
                     var next_query = nextQuery[lastQuery]
                     sendMsg(response[next_query].value, From)
                     users[From].lastQuery = next_query
