@@ -20,7 +20,10 @@ app.set('view engine', 'ejs')
 
 
 var nextQuery = {
-    "typeOfSite": "typeOfBusiness",
+    "typeOfSite": "name",
+    "name":"email",
+    "email": "address",
+    "address": "typeOfBusiness",
     "typeOfBusiness" : "businessName",
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
@@ -28,11 +31,23 @@ var nextQuery = {
 
 var response = {
     "typeOfSite" : {
-        value : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
+        value : "Heya! I am wit.bizz, a website builder bot! I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
         entity: "websiteType"
     },
+    "name":{
+        value: "Awesome! Tell me more about yourself. What's your name ?",
+        entity: "wit$contact"
+    },
+    "email":{
+        value: "And what's your email address ?",
+        entity: "wit$contact"
+    },
+    "address": {
+        value: "Got it. Where is your business located ?",
+        entity: "wit$contact"
+    },
     "typeOfBusiness": {
-        value : "Great! What kind of business do you have ?",
+        value : "Alright, let's talk about your business. What kind of business do you have ?",
         entity: "industryType"
     },
     "businessName": {
@@ -106,7 +121,6 @@ app.post("/get-msg", (req, res) => {
                 if(!found){
                     sendMsg("Sorry, I couldn't understand you. Silly me! Can you please be more specific ?", From)
                     console.log(users)
-                    users = {}
                 }
                 // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
                 // console.log(intent)
