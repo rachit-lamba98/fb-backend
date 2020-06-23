@@ -29,6 +29,10 @@ var nextQuery = {
     'aboutBusiness' : 'end'
 }
 
+// var updateResponse = {
+//     "ab"
+// }
+
 var response = {
     "typeOfSite" : {
         value : "Heya! I am wit.bizz, a website builder bot! I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
@@ -98,7 +102,6 @@ app.post("/get-msg", (req, res) => {
                 if(users[From].lastQuery == "end"){
                     users[From].siteCreated = true
                     console.log(users)
-                    users = {}
                 }
             }
             else{
@@ -113,7 +116,6 @@ app.post("/get-msg", (req, res) => {
                         if(users[From].lastQuery == "end"){
                             users[From].siteCreated = true
                             console.log(users)
-                            users = {}
                         }
                         break;
                     }
@@ -131,9 +133,16 @@ app.post("/get-msg", (req, res) => {
             console.log(e)
         })
     }
-    // else{
-
-    // }
+    else{
+        if(Body == "i want to update my website")
+        sendMsg("What do you want to change in your website ?", From)
+        else if(Body == "i want to change the about section" || Body == "about section")
+        sendMsg("Okay. What will be the content of the new About section ?", From)
+        else{
+            sendMsg("Got it. Updating now...", From)
+            setTimeOut(sendMsg("All done! Your about section is updated", From), 3000)
+        }
+    }
 })
 
 function sendMsg(msg, number) {
