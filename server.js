@@ -27,9 +27,8 @@ var intentToEntity = {
 }
 
 var nextQuery = {
-    "typeOfSite": "contactInfo",
-    "typeOfBusiness" : "contactInfo",
-    'contactInfo' : 'businessName',
+    "typeOfSite": "typeOfBusiness",
+    "typeOfBusiness" : "businessName",
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
 }
