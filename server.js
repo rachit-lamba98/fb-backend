@@ -78,32 +78,33 @@ app.post("/get-msg", (req, res) => {
         uri = 'https://api.wit.ai/message?q='+encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             var found = false; 
-            for(var entity in res.entities){
-                // console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0].name);
-                if(res.entities[entity][0].name == response[lastQuery].entity){
-                    found = true;
-                    users[From].data[lastQuery] = res.entities[entity][0].value
-                    var next_query = nextQuery[lastQuery]
-                    sendMsg(response[next_query].value, From)
-                    users[From].lastQuery = next_query
-                    break;
-                }
+            if(lastQuery == "aboutBusiness"){
+                users[From].data[lastQuery] = Body
+                var next_query = nextQuery[lastQuery]
+                sendMsg(response[next_query].value, From)
+                users[From].lastQuery = next_query
             }
-            if(!found){
-                if(response[lastQuery].entity == "none"){
-                    users[From].data[lastQuery] = Body
-                    sendMsg(response[nextQuery[lastQuery]].value, From)
-                    users[From].lastQuery = nextQuery[lastQuery]
+            else if(lastQuery != "aboutBusiness"){
+                for(var entity in res.entities){
+                    // console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0].name);
+                    if(res.entities[entity][0].name == response[lastQuery].entity){
+                        found = true;
+                        users[From].data[lastQuery] = res.entities[entity][0].value
+                        var next_query = nextQuery[lastQuery]
+                        sendMsg(response[next_query].value, From)
+                        users[From].lastQuery = next_query
+                        break;
+                    }
                 }
-                else{
+                if(!found){
                     sendMsg("Sorry, I couldn't understand you. Silly me! Can you please be more specific ?", From)
                     console.log(users)
                     users = {}
                 }
+                // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
+                // console.log(intent)
+                // console.log(console.log(res.entities[entity][0]))
             }
-            // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
-            // console.log(intent)
-            // console.log(console.log(res.entities[entity][0]))
             else{
                 if(nextQuery[lastQuery] == "end"){
                     users[From].siteCreated = true
