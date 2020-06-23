@@ -73,7 +73,8 @@ app.post("/get-msg", (req, res) => {
                 value = res.entities[entity][0].value
                 users[From].data[lastQuery] = value
                 console.log("VALUE FROM WIT FOR " + " " + lastQuery)
-                console.log(value)
+                console.log(intent)
+                console.log(console.log(res.entities[entity][0]))
             }
             else{
                 users[From].data[lastQuery] = Body
