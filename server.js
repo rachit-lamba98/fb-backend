@@ -97,11 +97,12 @@ app.post("/get-msg", (req, res) => {
             // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
             // console.log(intent)
             // console.log(console.log(res.entities[entity][0]))
-            
-            if(next_query == "end"){
-                users[From].siteCreated = true
-                console.log(users)
-                users = {}
+            else{
+                if(next_query == "end"){
+                    users[From].siteCreated = true
+                    console.log(users)
+                    users = {}
+                }
             }
         })
     }
