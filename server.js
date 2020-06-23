@@ -104,6 +104,8 @@ app.post("/get-msg", (req, res) => {
                     users = {}
                 }
             }
+        }).catch((e) => {
+            console.log(e)
         })
     }
     // else{
