@@ -28,10 +28,10 @@ var intentToEntity = {
 
 var nextQuery = {
     "typeOfSite": "name",
-    "typeOfBusiness" : "businessName",
     'name' : 'email',
     'email' : 'address',
-    'address' : 'businessName',
+    'address' : 'typeOfBusiness',
+    "typeOfBusiness" : "businessName",
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
 }
