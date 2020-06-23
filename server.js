@@ -78,6 +78,7 @@ app.post("/get-msg", (req, res) => {
             sendMsg(response[currentQuery], From)
             if(currentQuery == "end"){
                 users[From].siteCreated = true
+                console.log(users)
                 users = {}
             }
         })
