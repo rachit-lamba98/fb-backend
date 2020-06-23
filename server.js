@@ -62,20 +62,22 @@ app.post("/get-msg", (req, res) => {
         sendMsg(response[users[From].lastQuery], From)
     }
     else if(!(users[From].siteCreated)){
-        currentQuery = nextQuery[users[From].lastQuery]
+        var lastQuery = users[From].lastQuery
         users[From].lastQuery = currentQuery
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-            if(currentQuery == "typeOfSite" || currentQuery == "typeOfBusiness"){
+            if(lastQuery == "typeOfSite" || lastQuery == "typeOfBusiness"){
                 var intent = res.intents[0].name
                 var entity = intentToEntity[intent]
                 var value = res.entities[entity][0].value
-                users[From].data[currentQuery] = value
+                users[From].data[lastQuery] = value
             }
             else{
-                users[From].data[currentQuery] = Body
+                users[From].data[lastQuery] = Body
             }
+            currentQuery = nextQuery[users[From].lastQuery]
             sendMsg(response[currentQuery], From)
+            users[From].lastQuery = currentQuery
             if(currentQuery == "end"){
                 users[From].siteCreated = true
                 console.log(users)
