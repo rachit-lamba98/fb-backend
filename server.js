@@ -125,8 +125,7 @@ app.post("/get-msg", (req, res) => {
                         users[From].lastQuery = next_query
                         if(users[From].lastQuery == "end"){
                             users[From].siteCreated = true
-                            wait(3000)
-                            sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From)
+                            setTimeout(sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From), 3000)
                             console.log(users)
                         }
                         break;
@@ -153,7 +152,6 @@ app.post("/get-msg", (req, res) => {
         else{
             sendMsg("Got it. Updating now...", From)
             sendMsg("All done! Your about section is updated", From)
-            wait(3000)
 
         }
     }
