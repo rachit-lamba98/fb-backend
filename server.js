@@ -40,11 +40,11 @@ var response = {
     },
     "email":{
         value: "And what's your email address ?",
-        entity: "wit$contact"
+        entity: "wit$email"
     },
     "address": {
         value: "Got it. Where is your business located ?",
-        entity: "wit$contact"
+        entity: "wit$location"
     },
     "typeOfBusiness": {
         value : "Alright, let's talk about your business. What kind of business do you have ?",
@@ -103,7 +103,7 @@ app.post("/get-msg", (req, res) => {
             }
             else{
                 for(var entity in res.entities){
-                    // console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0].name);
+                    console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0].name);
                     if(res.entities[entity][0].name == response[lastQuery].entity){
                         found = true;
                         users[From].data[lastQuery] = res.entities[entity][0].value
