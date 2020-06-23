@@ -44,7 +44,7 @@ var response = {
     },
     "businessName": {
         value : "What is the name of your business ?",
-        entity: "none"
+        entity: "wit/contact"
     },
     "aboutBusiness": {
         value : "Awesome! Can you say more about what your business is about ?",
@@ -70,7 +70,7 @@ app.post("/get-msg", (req, res) => {
             lastQuery: "typeOfSite",
             data: {}
         }
-        sendMsg(response[users[From].lastQuery], From)
+        sendMsg(response[users[From].lastQuery].value, From)
     }
     else if(!(users[From].siteCreated)){
         var lastQuery = users[From].lastQuery 
@@ -84,7 +84,7 @@ app.post("/get-msg", (req, res) => {
                     found = true;
                     users[From].data[lastQuery] = entities[entity][0].value
                     var next_query = nextQuery[lastQuery]
-                    sendMsg(response[next_query], From)
+                    sendMsg(response[next_query].value, From)
                     users[From].lastQuery = next_query
                     break;
                 }
