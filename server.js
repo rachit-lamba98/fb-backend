@@ -27,26 +27,19 @@ var intentToEntity = {
 }
 
 var nextQuery = {
-    "typeOfSite": "name",
-    'name' : 'email',
-    'email' : 'address',
-    'address' : 'typeOfBusiness',
-    "typeOfBusiness" : "businessName",
+    "typeOfSite": "contactInfo",
+    "typeOfBusiness" : "contactInfo",
+    'contactInfo' : 'businessName',
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
 }
 
 var response = {
-    siteBuilding : {
-        "typeOfSite" : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
-        "typeOfBusiness": "Great! What kind of business do you have ?",
-        "businessName": "What is the name of your business ?",
-        "aboutBusiness": "Awesome! Can you say more about what your business is about ?",
-        "end": "That's all I needed! Your website will be ready in a few minutes.",
-        "name" : "Awesome. What's your name ?",
-        "email" : "And you email address ?",
-        "address": "At what address is your business situated ?"
-    }
+    "typeOfSite" : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
+    "typeOfBusiness": "Great! What kind of business do you have ?",
+    "businessName": "What is the name of your business ?",
+    "aboutBusiness": "Awesome! Can you say more about what your business is about ?",
+    "end": "That's all I needed! Your website will be ready in a few minutes.",
 }
 
 var users = {}
@@ -61,7 +54,6 @@ app.get("/", (req, res) =>{
 app.post("/get-msg", (req, res) => {
     const { From, Body } = req.body;
     var currentQuery = "";
-    uri = uri + encodeURIComponent(Body)
     if(!(From in users)){
         users[From] = {
             siteCreated: false,
@@ -70,35 +62,30 @@ app.post("/get-msg", (req, res) => {
         }
         sendMsg(response[users[From].lastQuery], From)
     }
-    // else if(!(users[From].siteCreated)){
-    //     currentQuery = nextQuery[users[From].lastQuery]
-    //     users[From].lastQuery = currentQuery
-    //     fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-    //         if(currentQuery == "typeOfSite" || currentQuery == "typeOfBusiness"){
-    //             var intent = res.intents[0].name
-    //             if(intent == "websiteModification")
-    //                 sendMsg("Please finish creating the website first, then you can update it.", From)
-    //             var entity = intentToEntity[intent]
-    //             var value = res.entities[entity][0].value
-    //             users[From].data[currentQuery] = value
-    //         }
-    //         else{
-    //             users[From].data[currentQuery] = Body
-    //         }
-    //         sendMsg(response.siteBuilding[currentQuery], From)
-    //         if(currentQuery == "end"){
-    //             users[From].siteCreated = true
-    //             console.log(users)
-    //             users = {}
-    //         }
-    //     })
-    // }
-    else{
+    else if(!(users[From].siteCreated)){
+        currentQuery = nextQuery[users[From].lastQuery]
+        users[From].lastQuery = currentQuery
+        uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-            var intent = res.intents[0].name
-            
-        });
+            if(currentQuery == "typeOfSite" || currentQuery == "typeOfBusiness"){
+                var intent = res.intents[0].name
+                var entity = intentToEntity[intent]
+                var value = res.entities[entity][0].value
+                users[From].data[currentQuery] = value
+            }
+            else{
+                users[From].data[currentQuery] = Body
+            }
+            sendMsg(response[currentQuery], From)
+            if(currentQuery == "end"){
+                users[From].siteCreated = true
+                users = {}
+            }
+        })
     }
+    // else{
+
+    // }
 })
 
 function sendMsg(msg, number) {
