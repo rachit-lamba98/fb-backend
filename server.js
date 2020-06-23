@@ -69,6 +69,8 @@ app.post("/get-msg", (req, res) => {
                 var entity = intentToEntity[intent]
                 var value = res.entities[entity][0].value
                 users[From].data[lastQuery] = value
+                console.log("RESPONSE begin" + " " + lastQuery)
+                console.log(res)
             }
             else{
                 users[From].data[lastQuery] = Body
