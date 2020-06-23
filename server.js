@@ -62,6 +62,7 @@ app.post("/get-msg", (req, res) => {
     }
     else if(!(users[From].siteCreated)){
         var lastQuery = users[From].lastQuery 
+        console.log("LAST QUESTION: " + lastQuery)
         console.log("RECEIVED MESSAGE : " + Body)
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
@@ -70,7 +71,7 @@ app.post("/get-msg", (req, res) => {
                 var entity = intentToEntity[intent]
                 var value = res.entities[entity][0].value
                 users[From].data[lastQuery] = value
-                console.log("RESPONSE begin" + " " + lastQuery)
+                console.log("VALUE FROM WIT FOR " + " " + lastQuery)
                 console.log(value)
             }
             else{
