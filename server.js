@@ -81,13 +81,14 @@ app.post("/get-msg", (req, res) => {
             var found = false; 
             for(var entity in res.entities){
                 if(entities[entity][0].name == response[lastQuery].entity){
-                    found = true;
-                    users[From].data[lastQuery] = entities[entity][0].value
-                    var next_query = nextQuery[lastQuery]
-                    sendMsg(response[next_query].value, From)
-                    users[From].lastQuery = next_query
-                    break;
-                }
+                //     found = true;
+                //     users[From].data[lastQuery] = entities[entity][0].value
+                //     var next_query = nextQuery[lastQuery]
+                //     sendMsg(response[next_query].value, From)
+                //     users[From].lastQuery = next_query
+                //     break;
+                // }
+                console.log(entity + "\n")
             }
             if(!found){
                 sendMsg("Sorry, I couldn't understand you. Silly me! Can you please repeat ?")
@@ -102,7 +103,9 @@ app.post("/get-msg", (req, res) => {
                 console.log(users)
                 users = {}
             }
-        })
+        }).catch(error){
+            console.log("ERROR" + error)
+        }
     }
     // else{
 
