@@ -49,7 +49,9 @@ var response = {
         value : "Awesome! Can you say more about what your business is about ?",
         entity : "none"
     },
-    "end": "That's all I needed! Your website will be ready in a few minutes.",
+    "end": {
+        value :"That's all I needed! Your website will be ready in a few minutes."
+    }
 }
 
 var users = {}
