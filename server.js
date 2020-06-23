@@ -80,7 +80,7 @@ app.post("/get-msg", (req, res) => {
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             var found = false; 
             for(var entity in res.entities){
-                console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0]);
+                console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0].name);
                 if(res.entities[entity][0].name == response[lastQuery].entity){
                     found = true;
                     users[From].data[lastQuery] = res.entities[entity][0].value
