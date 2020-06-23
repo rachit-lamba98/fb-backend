@@ -52,7 +52,6 @@ app.get("/", (req, res) =>{
 
 app.post("/get-msg", (req, res) => {
     const { From, Body } = req.body;
-    var currentQuery = "";
     if(!(From in users)){
         users[From] = {
             siteCreated: false,
@@ -62,8 +61,7 @@ app.post("/get-msg", (req, res) => {
         sendMsg(response[users[From].lastQuery], From)
     }
     else if(!(users[From].siteCreated)){
-        var lastQuery = users[From].lastQuery
-        users[From].lastQuery = currentQuery
+        var lastQuery = users[From].lastQuery 
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             if(lastQuery == "typeOfSite" || lastQuery == "typeOfBusiness"){
@@ -75,9 +73,9 @@ app.post("/get-msg", (req, res) => {
             else{
                 users[From].data[lastQuery] = Body
             }
-            currentQuery = nextQuery[users[From].lastQuery]
-            sendMsg(response[currentQuery], From)
-            users[From].lastQuery = currentQuery
+            var next_query = nextQuery[lastQuery]
+            sendMsg(response[next_query], From)
+            users[From].lastQuery = next_query
             if(currentQuery == "end"){
                 users[From].siteCreated = true
                 console.log(users)
