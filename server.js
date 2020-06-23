@@ -33,6 +33,14 @@ var nextQuery = {
 //     "ab"
 // }
 
+function wait(ms) {
+    var start = Date.now(),
+        now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
+}
+
 var response = {
     "typeOfSite" : {
         value : "Heya! I am wit.bizz, a website builder bot! I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
@@ -101,7 +109,8 @@ app.post("/get-msg", (req, res) => {
                 users[From].lastQuery = next_query
                 if(users[From].lastQuery == "end"){
                     users[From].siteCreated = true
-                    sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp,com", From)
+                    wait(3000)
+                    sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From)
                     console.log(users)
                 }
             }
@@ -116,7 +125,8 @@ app.post("/get-msg", (req, res) => {
                         users[From].lastQuery = next_query
                         if(users[From].lastQuery == "end"){
                             users[From].siteCreated = true
-                            sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp,com", From)
+                            wait(3000)
+                            sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From)
                             console.log(users)
                         }
                         break;
@@ -136,12 +146,13 @@ app.post("/get-msg", (req, res) => {
         })
     }
     else{
-        if(Body == "i want to update my website")
+        if(Body == "I want to update my website")
         sendMsg("What do you want to change in your website ?", From)
         else if(Body == "i want to change the about section" || Body == "about section")
         sendMsg("Okay. What will be the content of the new About section ?", From)
         else{
             sendMsg("Got it. Updating now...", From)
+            wait(3000)
             sendMsg("All done! Your about section is updated", From)
         }
     }
