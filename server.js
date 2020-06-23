@@ -44,7 +44,7 @@ var response = {
     },
     "businessName": {
         value : "What is the name of your business ?",
-        entity: "wit/contact"
+        entity: "wit$contact"
     },
     "aboutBusiness": {
         value : "Awesome! Can you say more about what your business is about ?",
