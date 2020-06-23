@@ -68,9 +68,9 @@ app.post("/get-msg", (req, res) => {
         sendMsg(response[users[From].lastQuery], From)
     }
     else if(!(users[From].siteCreated)){
-        lastQuery = users[From].lastQuery
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
+            lastQuery = users[From].lastQuery
             if(lastQuery == "typeOfSite" || lastQuery == "typeOfBusiness"){
                 var intent = res.intents[0].name
                 var entity = intentToEntity[intent]
