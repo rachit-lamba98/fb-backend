@@ -91,7 +91,7 @@ app.post("/get-msg", (req, res) => {
                 console.log(entity)
             }
             if(!found){
-                sendMsg("Sorry, I couldn't understand you. Silly me! Can you please repeat ?")
+                sendMsg("Sorry, I couldn't understand you. Silly me! Can you please repeat ?", From)
                 users = {}
             }
             // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
