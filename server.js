@@ -110,7 +110,6 @@ app.post("/get-msg", (req, res) => {
                 if(users[From].lastQuery == "end"){
                     users[From].siteCreated = true
                     sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From)
-                    wait(3000)
                     console.log(users)
                 }
             }
@@ -121,7 +120,7 @@ app.post("/get-msg", (req, res) => {
                         found = true;
                         users[From].data[lastQuery] = res.entities[entity][0].value
                         var next_query = nextQuery[lastQuery]
-                        setTimeout(sendMsg(response[next_query].value, From),3000)
+                        sendMsg(response[next_query].value, From)
                         users[From].lastQuery = next_query
                         if(users[From].lastQuery == "end"){
                             users[From].siteCreated = true
