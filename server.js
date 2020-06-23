@@ -70,29 +70,29 @@ app.post("/get-msg", (req, res) => {
         }
         sendMsg(response[users[From].lastQuery], From)
     }
-    else if(!(users[From].siteCreated)){
-        currentQuery = nextQuery[users[From].lastQuery]
-        users[From].lastQuery = currentQuery
-        fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-            if(currentQuery == "typeOfSite" || currentQuery == "typeOfBusiness"){
-                var intent = res.intents[0].name
-                if(intent == "websiteModification")
-                    sendMsg("Please finish creating the website first, then you can update it.", From)
-                var entity = intentToEntity[intent]
-                var value = res.entities[entity][0].value
-                users[From].data[currentQuery] = value
-            }
-            else{
-                users[From].data[currentQuery] = Body
-            }
-            sendMsg(response.siteBuilding[currentQuery], From)
-            if(currentQuery == "end"){
-                users[From].siteCreated = true
-                console.log(users)
-                users = {}
-            }
-        })
-    }
+    // else if(!(users[From].siteCreated)){
+    //     currentQuery = nextQuery[users[From].lastQuery]
+    //     users[From].lastQuery = currentQuery
+    //     fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
+    //         if(currentQuery == "typeOfSite" || currentQuery == "typeOfBusiness"){
+    //             var intent = res.intents[0].name
+    //             if(intent == "websiteModification")
+    //                 sendMsg("Please finish creating the website first, then you can update it.", From)
+    //             var entity = intentToEntity[intent]
+    //             var value = res.entities[entity][0].value
+    //             users[From].data[currentQuery] = value
+    //         }
+    //         else{
+    //             users[From].data[currentQuery] = Body
+    //         }
+    //         sendMsg(response.siteBuilding[currentQuery], From)
+    //         if(currentQuery == "end"){
+    //             users[From].siteCreated = true
+    //             console.log(users)
+    //             users = {}
+    //         }
+    //     })
+    // }
     else{
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             var intent = res.intents[0].name
