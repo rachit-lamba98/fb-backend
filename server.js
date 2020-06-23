@@ -86,7 +86,7 @@ app.post("/get-msg", (req, res) => {
                 sendMsg(response[next_query].value, From)
                 users[From].lastQuery = next_query
             }
-            else if(lastQuery != "aboutBusiness"){
+            else{
                 for(var entity in res.entities){
                     // console.log("Wit response for " + lastQuery + ": " + res.entities[entity][0].name);
                     if(res.entities[entity][0].name == response[lastQuery].entity){
@@ -106,14 +106,15 @@ app.post("/get-msg", (req, res) => {
                 // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
                 // console.log(intent)
                 // console.log(console.log(res.entities[entity][0]))
-            }
-            else{
-                if(nextQuery[lastQuery] == "end"){
-                    users[From].siteCreated = true
-                    console.log(users)
-                    users = {}
+                else{
+                    if(nextQuery[lastQuery] == "end"){
+                        users[From].siteCreated = true
+                        console.log(users)
+                        users = {}
+                    }
                 }
             }
+            
         }).catch((e) => {
             console.log(e)
         })
