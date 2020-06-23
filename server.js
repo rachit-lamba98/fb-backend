@@ -34,10 +34,22 @@ var nextQuery = {
 }
 
 var response = {
-    "typeOfSite" : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
-    "typeOfBusiness": "Great! What kind of business do you have ?",
-    "businessName": "What is the name of your business ?",
-    "aboutBusiness": "Awesome! Can you say more about what your business is about ?",
+    "typeOfSite" : {
+        value : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
+        entity: "websiteType"
+    },
+    "typeOfBusiness": {
+        value : "Great! What kind of business do you have ?",
+        entity: "industryType"
+    },
+    "businessName": {
+        value : "What is the name of your business ?",
+        entity: "none"
+    },
+    "aboutBusiness": {
+        value : "Awesome! Can you say more about what your business is about ?",
+        entity : "none"
+    },
     "end": "That's all I needed! Your website will be ready in a few minutes.",
 }
 
@@ -62,26 +74,29 @@ app.post("/get-msg", (req, res) => {
     }
     else if(!(users[From].siteCreated)){
         var lastQuery = users[From].lastQuery 
-        console.log("LAST QUESTION: " + lastQuery)
-        console.log("RECEIVED MESSAGE : " + Body)
+        // console.log("LAST QUESTION: " + lastQuery)
+        // console.log("RECEIVED MESSAGE : " + Body)
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-            if(lastQuery == "typeOfSite" || lastQuery == "typeOfBusiness"){
-                var value = ""
-                var intent = res.intents[0].name
-                var entity = intentToEntity[intent]
-                value = res.entities[entity][0].value
-                users[From].data[lastQuery] = value
-                console.log("VALUE FROM WIT FOR " + " " + lastQuery)
-                console.log(intent)
-                console.log(console.log(res.entities[entity][0]))
+            var found = false; 
+            for(var entity in res.entities){
+                if(entities[entity][0].name == response[lastQuery].entity){
+                    found = true;
+                    users[From].data[lastQuery] = entities[entity][0].value
+                    var next_query = nextQuery[lastQuery]
+                    sendMsg(response[next_query], From)
+                    users[From].lastQuery = next_query
+                    break;
+                }
             }
-            else{
-                users[From].data[lastQuery] = Body
+            if(!found){
+                sendMsg("Sorry, I couldn't understand you. Silly me! Can you please repeat ?")
+                users = {}
             }
-            var next_query = nextQuery[lastQuery]
-            sendMsg(response[next_query], From)
-            users[From].lastQuery = next_query
+            // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
+            // console.log(intent)
+            // console.log(console.log(res.entities[entity][0]))
+            
             if(next_query == "end"){
                 users[From].siteCreated = true
                 console.log(users)
