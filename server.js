@@ -69,11 +69,7 @@ app.post("/get-msg", (req, res) => {
     }
     else if(!(users[From].siteCreated)){
         var lastQuery = users[From].lastQuery 
-        if(lastQuery == "end"){
-            users[From].siteCreated = true
-            console.log(users)
-            users = {}
-        }
+        
         // console.log("LAST QUESTION: " + lastQuery)
         // console.log("RECEIVED MESSAGE : " + Body)
         uri = 'https://api.wit.ai/message?q='+encodeURIComponent(Body)
@@ -84,6 +80,11 @@ app.post("/get-msg", (req, res) => {
                 var next_query = nextQuery[lastQuery]
                 sendMsg(response[next_query].value, From)
                 users[From].lastQuery = next_query
+                if(users[From].lastQuery == "end"){
+                    users[From].siteCreated = true
+                    console.log(users)
+                    users = {}
+                }
             }
             else{
                 for(var entity in res.entities){
@@ -94,6 +95,11 @@ app.post("/get-msg", (req, res) => {
                         var next_query = nextQuery[lastQuery]
                         sendMsg(response[next_query].value, From)
                         users[From].lastQuery = next_query
+                        if(users[From].lastQuery == "end"){
+                            users[From].siteCreated = true
+                            console.log(users)
+                            users = {}
+                        }
                         break;
                     }
                 }
