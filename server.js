@@ -27,7 +27,10 @@ var intentToEntity = {
 }
 
 var nextQuery = {
-    "typeOfSite": "typeOfBusiness",
+    "typeOfSite": "name",
+    "name":"email",
+    "email":"address",
+    "address":"typeOfBusiness",
     "typeOfBusiness" : "businessName",
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
@@ -35,10 +38,13 @@ var nextQuery = {
 
 var response = {
     "typeOfSite" : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
-    "typeOfBusiness": "Great! What kind of business do you have ?",
-    "businessName": "What is the name of your business ?",
+    "typeOfBusiness": "Great! Now tell me more about your business. What kind of business do you have ?",
+    "businessName": "Amd what is the name of your business ?",
     "aboutBusiness": "Awesome! Can you say more about what your business is about ?",
     "end": "That's all I needed! Your website will be ready in a few minutes.",
+    "name":"Got it. What's your name ?",
+    'email':'And your email ?',
+    'address': "Alright. Where's your business situated ?"
 }
 
 var users = {}
@@ -78,6 +84,7 @@ app.post("/get-msg", (req, res) => {
             sendMsg(response[currentQuery], From)
             if(currentQuery == "end"){
                 users[From].siteCreated = true
+                console.log(users)
                 users = {}
             }
         })
