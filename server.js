@@ -80,18 +80,18 @@ app.post("/get-msg", (req, res) => {
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             var found = false; 
             for(var entity in res.entities){
-                // if(entities[entity][0].name == response[lastQuery].entity){
-                //     found = true;
-                //     users[From].data[lastQuery] = entities[entity][0].value
-                //     var next_query = nextQuery[lastQuery]
-                //     sendMsg(response[next_query].value, From)
-                //     users[From].lastQuery = next_query
-                //     break;
-                // }
-                console.log(entity)
+                if(entities[entity][0].name == response[lastQuery].entity){
+                    found = true;
+                    users[From].data[lastQuery] = entities[entity][0].value
+                    var next_query = nextQuery[lastQuery]
+                    sendMsg(response[next_query].value, From)
+                    users[From].lastQuery = next_query
+                    break;
+                }
             }
             if(!found){
                 sendMsg("Sorry, I couldn't understand you. Silly me! Can you please repeat ?", From)
+                console.log(users)
                 users = {}
             }
             // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
