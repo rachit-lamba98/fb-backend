@@ -67,9 +67,10 @@ app.post("/get-msg", (req, res) => {
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
             if(lastQuery == "typeOfSite" || lastQuery == "typeOfBusiness"){
+                var value = ""
                 var intent = res.intents[0].name
                 var entity = intentToEntity[intent]
-                var value = res.entities[entity][0].value
+                value = res.entities[entity][0].value
                 users[From].data[lastQuery] = value
                 console.log("VALUE FROM WIT FOR " + " " + lastQuery)
                 console.log(value)
