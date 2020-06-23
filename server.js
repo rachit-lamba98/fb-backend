@@ -28,23 +28,17 @@ var intentToEntity = {
 
 var nextQuery = {
     "typeOfSite": "typeOfBusiness",
-    "typeOfBusiness" : "name",
-    "name":"email",
-    "email":"address",
-    "address":"businessName",
+    "typeOfBusiness" : "businessName",
     'businessName' : 'aboutBusiness',
     'aboutBusiness' : 'end'
 }
 
 var response = {
     "typeOfSite" : "Henloooooo, this is website builder bot. I assume you want a website built for your business since you're already here. Let's begin by getting to know you better. Do you want to advertise your business or sell your products ?",
-    "typeOfBusiness": "Great! Now tell me more about your business. What kind of business do you have ?",
-    "businessName": "Amd what is the name of your business ?",
+    "typeOfBusiness": "Great! What kind of business do you have ?",
+    "businessName": "What is the name of your business ?",
     "aboutBusiness": "Awesome! Can you say more about what your business is about ?",
     "end": "That's all I needed! Your website will be ready in a few minutes.",
-    "name":"Got it. What's your name ?",
-    'email':'And your email ?',
-    'address': "Alright. Where's your business situated ?"
 }
 
 var users = {}
@@ -58,7 +52,7 @@ app.get("/", (req, res) =>{
 
 app.post("/get-msg", (req, res) => {
     const { From, Body } = req.body;
-    var lastQuery = "";
+    var currentQuery = "";
     if(!(From in users)){
         users[From] = {
             siteCreated: false,
@@ -68,23 +62,22 @@ app.post("/get-msg", (req, res) => {
         sendMsg(response[users[From].lastQuery], From)
     }
     else if(!(users[From].siteCreated)){
+        currentQuery = nextQuery[users[From].lastQuery]
+        users[From].lastQuery = currentQuery
         uri = uri + encodeURIComponent(Body)
         fetch(uri, {headers: {Authorization: auth}}).then(res => res.json()).then((res) => {
-            lastQuery = users[From].lastQuery
-            if(lastQuery == "typeOfSite" || lastQuery == "typeOfBusiness"){
+            if(currentQuery == "typeOfSite" || currentQuery == "typeOfBusiness"){
                 var intent = res.intents[0].name
                 var entity = intentToEntity[intent]
                 var value = res.entities[entity][0].value
-                users[From].data[lastQuery] = value
+                users[From].data[currentQuery] = value
             }
             else{
-                users[From].data[lastQuery] = Body
+                users[From].data[currentQuery] = Body
             }
-            sendMsg(response[nextQuery[lastQuery]], From)
-            users[From].lastQuery = nextQuery[lastQuery]
-            if(nextQuery[lastQuery] == "end"){
+            sendMsg(response[currentQuery], From)
+            if(currentQuery == "end"){
                 users[From].siteCreated = true
-                console.log(users)
                 users = {}
             }
         })
