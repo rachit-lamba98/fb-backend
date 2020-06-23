@@ -18,12 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '/templates/views'))
 app.set('view engine', 'ejs')
 
-var intentToEntity = {
-    'websiteModification' : 'websiteModifications:websiteModifications',
-    'Industry' : 'industryType:industryType',
-    'kindOfWebsite' : 'websiteType:websiteType',
-    'userResponse' : 'websiteModifications:websiteModifications'
-}
 
 var nextQuery = {
     "typeOfSite": "typeOfBusiness",
@@ -75,6 +69,11 @@ app.post("/get-msg", (req, res) => {
     }
     else if(!(users[From].siteCreated)){
         var lastQuery = users[From].lastQuery 
+        if(lastQuery == "end"){
+            users[From].siteCreated = true
+            console.log(users)
+            users = {}
+        }
         // console.log("LAST QUESTION: " + lastQuery)
         // console.log("RECEIVED MESSAGE : " + Body)
         uri = 'https://api.wit.ai/message?q='+encodeURIComponent(Body)
@@ -106,13 +105,6 @@ app.post("/get-msg", (req, res) => {
                 // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
                 // console.log(intent)
                 // console.log(console.log(res.entities[entity][0]))
-                else{
-                    if(nextQuery[lastQuery] == "end"){
-                        users[From].siteCreated = true
-                        console.log(users)
-                        users = {}
-                    }
-                }
             }
             
         }).catch((e) => {
