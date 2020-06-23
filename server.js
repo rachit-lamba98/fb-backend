@@ -102,8 +102,6 @@ app.post("/get-msg", (req, res) => {
                 console.log(users)
                 users = {}
             }
-        }).catch((error) => {
-            console.log("ERROR" + " " + error)
         })
     }
     // else{
