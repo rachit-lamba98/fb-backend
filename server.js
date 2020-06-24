@@ -149,6 +149,10 @@ app.post("/get-msg", (req, res) => {
     else{
         if(Body == "I want to update my website" || Body == "Change my website")
         sendMsg("What do you want to change in your website ?", From)
+        else if(Body == "Nothing" || Body == "That's all" || Body == "Thats all" || Body == "thats all" || Body == "nothing")
+        sendMsg("Thanks for using wit.bizz!", From)
+        else if(Body == "Change my business name" || Body == "change my business name" || Body == "change my business name")
+        sendMsg("Sure. What do you want to change it to ?")
         else if(Body == "i want to change the about section" || Body == "about section")
         sendMsg("Okay. What will be the content of the new About section ?", From)
         else if(Body == "Show me the user engagement of my website"){
@@ -162,9 +166,10 @@ app.post("/get-msg", (req, res) => {
             .catch((err) => {
                 console.log(err);
             });
+            sendMsg("Is there anything else that I can help you with ?", From)
         }
         else{
-            sendDelay("All done! Your about section is updated", From, 5000).then(()=>{
+            sendDelay("All done! Your website is updated! What else can I help you with ?", From, 5000).then(()=>{
                 sendMsg("Got it. Updating now...", From)
             }).catch((error)=>{
                 console.log(error)
