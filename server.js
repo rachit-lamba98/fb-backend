@@ -77,7 +77,7 @@ var response = {
 
 var users = {}
 
-
+// changes!
 app.get("/", (req, res) =>{
     console.log(path.join(__dirname, '/templates/views'))
     res.render('home', {data:"App is running on port" + port})
