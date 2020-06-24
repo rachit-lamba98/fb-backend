@@ -105,7 +105,7 @@ app.post("/get-msg", (req, res) => {
             if(lastQuery == "aboutBusiness"){
                 users[From].data[lastQuery] = Body
                 var next_query = nextQuery[lastQuery]
-                sendDelay(sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From, 5000)).then(()=>{
+                sendDelay("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From, 5000).then(()=>{
                     sendMsg(response[next_query].value, From)
                 }).catch((err)=>{
                     console.log(err)
