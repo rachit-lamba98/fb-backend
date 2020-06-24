@@ -154,7 +154,7 @@ app.post("/get-msg", (req, res) => {
         else if(Body == "Nothing" || Body == "That's all" || Body == "Thats all" || Body == "thats all" || Body == "nothing")
         sendMsg("Thanks for using wit.bizz!", From)
         else if(Body == "Change my business name" || Body == "change my business name" || Body == "change my business name")
-        sendMsg("Sure. What do you want to change it to ?")
+        sendMsg("Sure. What do you want to change it to ?", From)
         else if(Body == "Change my email address" || Body == "change my email address" || Body == "update my email address")
         sendMsg("Okay. What is your new email address ?", From)
         else if(Body == "i want to change the about section" || Body == "about section")
