@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const fetch = require('node-fetch')
 
 const accountSid = 'AC31b47c864d200ec38454dca109f2b67d';
-const authToken = '9253c5881b929c6f0e3e0d857a7e19bd';
+const authToken = '5755ef2e27316f7d10cf68504f69e549';
 const client = require('twilio')(accountSid, authToken);
 
 CLIENT_TOKEN = 'GXSOHQRNFTVBGTORX5QXQJXJ3WXEARZS'
@@ -149,10 +149,14 @@ app.post("/get-msg", (req, res) => {
     else{
         if(Body == "I want to update my website" || Body == "Change my website")
         sendMsg("What do you want to change in your website ?", From)
+        else if(Body == "Yes" || Body == "yes" || Body == "Yeah" || Body == "Sure")
+        sendMsg("What can I help you with ?", From)
         else if(Body == "Nothing" || Body == "That's all" || Body == "Thats all" || Body == "thats all" || Body == "nothing")
         sendMsg("Thanks for using wit.bizz!", From)
         else if(Body == "Change my business name" || Body == "change my business name" || Body == "change my business name")
         sendMsg("Sure. What do you want to change it to ?")
+        else if(Body == "Change my email address" || Body == "change my email address" || Body == "update my email address")
+        sendMsg("Okay. What is your new email address ?", From)
         else if(Body == "i want to change the about section" || Body == "about section")
         sendMsg("Okay. What will be the content of the new About section ?", From)
         else if(Body == "Show me the user engagement of my website"){
