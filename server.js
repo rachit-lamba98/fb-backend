@@ -138,7 +138,7 @@ app.post("/get-msg", (req, res) => {
                     console.log(users)
                 }
                 // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
-                // console.log(intent)
+                // console.log(intent)//gjd
                 // console.log(console.log(res.entities[entity][0]))
             }
             
