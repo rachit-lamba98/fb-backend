@@ -139,7 +139,7 @@ app.post("/get-msg", (req, res) => {
                 }
                 // console.log("VALUE FROM WIT FOR " + " " + lastQuery)
                 // console.log(intent)//gjd
-                // console.log(console.log(res.entities[entity][0]))
+                // console.log(console.log(res.entities[entity][0]))hsehes
             }
             
         }).catch((e) => {
