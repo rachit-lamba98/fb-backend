@@ -127,7 +127,7 @@ app.post("/get-msg", (req, res) => {
                         users[From].lastQuery = next_query
                         if(users[From].lastQuery == "end"){
                             users[From].siteCreated = true
-                            sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From)
+                            sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com Is there anything else I can help you with ?", From)
                             console.log(users)
                         }
                         break;
@@ -164,13 +164,13 @@ app.post("/get-msg", (req, res) => {
             .create({
                 mediaUrl: ['https://i.imgur.com/Xt2DTkJ.jpg'],
                 from: 'whatsapp:+14155238886',
-                body: "Here you go!",
+                body: "Here you go! Is there anything else that I can help you with ?",
                 to: 'whatsapp:+917042971742'
             })
             .catch((err) => {
                 console.log(err);
             });
-            sendMsg("Is there anything else that I can help you with ?", From)
+            sendMsg("", From)
         }
         else{
             sendDelay("All done! Your website is updated! What else can I help you with ?", From, 5000).then(()=>{
