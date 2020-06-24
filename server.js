@@ -105,11 +105,14 @@ app.post("/get-msg", (req, res) => {
             if(lastQuery == "aboutBusiness"){
                 users[From].data[lastQuery] = Body
                 var next_query = nextQuery[lastQuery]
-                sendMsg(response[next_query].value, From)
+                sendDelay(sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From, 5000)).then(()=>{
+                    sendMsg(response[next_query].value, From)
+                }).catch((err)=>{
+                    console.log(err)
+                })
                 users[From].lastQuery = next_query
                 if(users[From].lastQuery == "end"){
                     users[From].siteCreated = true
-                    sendMsg("Your website is all done! Check it out at https://www.cryptx-7042971742.herokuapp.com", From)
                     console.log(users)
                 }
             }
@@ -144,14 +147,28 @@ app.post("/get-msg", (req, res) => {
         })
     }
     else{
-        if(Body == "I want to update my website")
+        if(Body == "I want to update my website" || Body == "Change my website")
         sendMsg("What do you want to change in your website ?", From)
         else if(Body == "i want to change the about section" || Body == "about section")
         sendMsg("Okay. What will be the content of the new About section ?", From)
+        else if(Body == "Show me the user engagement of my website"){
+            client.messages
+            .create({
+                mediaUrl: ['https://i.imgur.com/Xt2DTkJ.jpg'],
+                from: 'whatsapp:+14155238886',
+                body: "Here you go!",
+                to: 'whatsapp:+917042971742'
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
         else{
-            sendMsg("Got it. Updating now...", From)
-            sendMsg("All done! Your about section is updated", From)
-
+            sendDelay("All done! Your about section is updated", From, 5000).then(()=>{
+                sendMsg("Got it. Updating now...", From)
+            }).catch((error)=>{
+                console.log(error)
+            })
         }
     }
 })
@@ -170,6 +187,22 @@ function sendMsg(msg, number) {
 }
 
 sendMsg("Available now!", "whatsapp:+917042971742")
+
+function sendDelay(msg, number, delay) {
+    return new Promise((resolve, reject)=>{
+        var err = 0
+        setTimeout(sendMsg, delay, msg, number)
+        if(err == 1)
+            reject("error")
+        resolve("yooo")
+    })
+}
+
+// sendDelay("Msg1", "whatsapp:+917042971742", 3000).then((result)=>{
+//     sendMsg("Msg2", "whatsapp:+917042971742")
+// }).catch((error)=>{
+//     console.log(error)
+// })
 
 app.listen(port, ()=>{
     console.log("Server is running on port " + port);
