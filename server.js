@@ -12,7 +12,7 @@ CLIENT_TOKEN = 'GXSOHQRNFTVBGTORX5QXQJXJ3WXEARZS'
 const auth = 'Bearer ' + CLIENT_TOKEN
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '/templates/views'))
