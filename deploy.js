@@ -1,6 +1,7 @@
 const { exec } = require('child_process');
 
  function deployWebsite(phoneNumber){
+  console.log("deploying website");
    return new Promise((resolve,reject)=>{
     var child = exec("./deploy.sh", function(err, result) {
         if (err) {
